@@ -1,0 +1,36 @@
+***准备工作***
+unitree_go 的密码：123
+isee的密码:iseenav
+
+***连接go2***
+ssh unitree@192.168.123.18
+选择 1 foxy
+
+***配置ROS2环境***
+cd ~/unitree_ros2
+source setup_connect.sh
+
+此时电脑和unitree_go2已经建立连接
+***验证连接***
+在本地终端使用ros2 topic list可以正确查看到topic
+
+
+***基本用法***
+cd ~/unitree_ros2
+
+| 0 | NORMAL_STAND | 正常站立 | `./install/unitree_ros2_example/bin/go2_sport_client 0` |
+| 2 | STAND_DOWN | 趴下 | `./install/unitree_ros2_example/bin/go2_sport_client 3` |
+| 2 | MOVE | 向前移动（0.3m/s） | `./install/unitree_ros2_example/bin/go2_sport_client 9` |
+
+按ctrl+c停止测试
+
+***连接相机***
+在已经连上unitree_ros2的终端运行：ros2 launch realsense2_camera rs_launch.py（必须进入unitree@ubuntu运行）
+激活vint_deployment虚拟环境
+
+***运行你自己的程序***
+需要在代码中订阅相机话题，可以参考当前目录下的camera_subscriber.py
+需要在代码中执行运动控制代码，可以参考当前目录下的go2_controller.py
+
+
+如果不会用，可以参考/home/isee/unitree_ros2/flownav_grpo_occ_go2/deployment/src/exploration/explore.sh这个文件的使用方法。执行explore.sh会打开两个tmux，一个执行explore.py，另一个执行go2_controller.py，可以看看它们两者是如何协同工作的。
